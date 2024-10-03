@@ -1,0 +1,43 @@
+class WordsFinder:
+    trans_ = str.maketrans('.!,:;=?', '       ')
+
+    def __init__(self,*file_names):
+        self.file_names = file_names
+
+    def get_all_words(self):
+        all_words={}
+        for file_name in self.file_names:
+            with open(file_name) as file:
+                a = file_name.read()
+                a = a.lower()
+                a = a.replace(' - ', ' ')
+                a = a.translate(self.trans_)
+                a = ' '.join(content.split())
+                all_words[file_name] = a.split()
+        return all_words
+
+    def deffind(self, word):
+        deffind_words={}
+        word =  word.lower()
+        for file_name, words in get_all_words().items():
+            gg = False
+            for i in range(len(words)):
+                if words[i]== word:
+                    gg= True
+                    break
+                if gg:
+                    deffind_words[file_name] = i + 1
+            return deffind_words
+
+    def count(self, word):
+        count_words={}
+        word = word.lower()
+        for file_name, words in get_all_words().items():
+            count_words[file_name] = words.count(word)
+        return count_words
+
+if __name__=="__main__":
+    finder2 = WordsFinder('test_file.txt')
+    print(finder2.get_all_words()) # Все слова
+    print(finder2.find('TEXT')) # 3 слово по счёту
+    print(finder2.count('teXT')) # 4 слова teXT в тексте всего
